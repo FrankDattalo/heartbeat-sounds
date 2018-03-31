@@ -6,7 +6,7 @@ function ret = extractFeatures(data, sampleFrequency)
 % sampleFrequency: the raw sample frequency
 
 % simple statistics of raw data
-meanAmplitude = mean(data);
+meanAmplitude = abs(mean(data));
 stdAmplitude = std(data);
 varAmplitude = var(data);
 
@@ -24,19 +24,12 @@ meanLoc = mean(locs);
 stdLoc = std(locs);
 varLoc = var(locs);
 
-% fprintf("Mean Loc: %f\n", meanLoc);
-% fprintf("Std Loc: %f\n", stdLoc);
-% fprintf("Var Loc: %f\n", varLoc);
-
 meanPeak = mean(peaks);
 stdPeaks = std(peaks);
 varPeaks = var(peaks);
 peaksRate = length(locs) / length(data);
 
-% fprintf("Mean Peak: %f\n", meanPeak);
-% fprintf("STD Peak: %f\n", stdPeaks);
-% fprintf("Var Peak: %f\n", varPeaks);
-
+% peaks sorted by intensity
 [sortedPeaks, sortedIndecies] = sort(peaks, 'desc');
 sortedLocs = locs(sortedIndecies);
 
@@ -82,6 +75,63 @@ meanFirstLocations10 = mean(firstSortedLocations);
 stdFirstLocations10 = std(firstSortedLocations);
 varFirstLocations10 = var(firstSortedLocations);
 
+% peaks of abs ampltude of .10 relative prominance
+absData = abs(data);
+
+[~, locs10] = findpeaks(absData, sampleFrequency, ...
+    'minpeakprominence', .10);
+% remove all NaN peaks
+locs10 = dropNaN(locs10);
+
+distances10 = computeDistances(locs10);
+
+meanDistances10 = mean(distances10);
+stdDistances10 = std(distances10);
+varDistances10 = var(distances10);
+relativeMeanDistances10 = meanDistances10 / length(data);
+
+% peaks of abs ampltude of .15 relative prominance
+
+[~, locs15] = findpeaks(absData, sampleFrequency, ...
+    'minpeakprominence', .15);
+% remove all NaN peaks
+locs15 = dropNaN(locs15);
+
+distances15 = computeDistances(locs15);
+
+meanDistances15 = mean(distances15);
+stdDistances15 = std(distances15);
+varDistances15 = var(distances15);
+relativeMeanDistances15 = meanDistances15 / length(data);
+
+% peaks of abs ampltude of .3 relative prominance
+
+[~, locs30] = findpeaks(absData, sampleFrequency, ...
+    'minpeakprominence', .3);
+% remove all NaN peaks
+locs30 = dropNaN(locs30);
+
+distances30 = computeDistances(locs30);
+
+meanDistances30 = mean(distances30);
+stdDistances30 = std(distances30);
+varDistances30 = var(distances30);
+relativeMeanDistance30 = meanDistances30 / length(data);
+
+% peaks of abs ampltude of .05 relative prominance
+
+[~, locs05] = findpeaks(absData, sampleFrequency, ...
+    'minpeakprominence', .05);
+% remove all NaN peaks
+locs05 = dropNaN(locs05);
+
+distances05 = computeDistances(locs05);
+
+meanDistances05 = mean(distances05);
+stdDistances05 = std(distances05);
+varDistances05 = var(distances05);
+relativeMeanDistance05 = meanDistances05 / length(data);
+
 % root mean squared of the data
 rmsData = rms(data);
 
@@ -91,9 +141,7 @@ meanXcorrData = mean(xcorrData);
 stdXcorrData = std(xcorrData);
 varXcorrData = var(xcorrData);
 
-% fprintf("Mean XCorr: %f\n", meanXcorrData);
-% fprintf("Std XCorr: %f\n", stdXcorrData);
-% fprintf("Var XCorr: %f\n", varXcorrData);
+% Outliers of moving median data
 
 outliers100 = isoutlier(data, 'movmedian', 100);
 percentOutliers100 = sum(outliers100) / length(data);
@@ -120,7 +168,8 @@ meanFrequency = meanfreq(data, sampleFrequency);
 % of time
 percentMovingAbsoluteDeviation = mad(data, 100) / length(data);
 
-ret = zeros(42, 1);
+N = 59;
+ret = zeros(N, 1);
 ret(1) = meanAmplitude;
 ret(2) = stdAmplitude;
 ret(3) = varAmplitude;
@@ -157,10 +206,34 @@ ret(33) = percentOutliers100;
 ret(34) = percentOutliers500;
 ret(35) = percentOutliers1000;
 ret(36) = percentOutliers2500;
-ret(37) = meanFrequency;
-ret(38) = percentMovingAbsoluteDeviation;
-ret(39) = peaksRate;
-ret(40) = meanPowerSpectralDensity;
-ret(41) = stdPowerSpectralDensity;
-ret(42) = varPowerSpectralDensity;
+ret(37) = percentOutliers5000;
+ret(38) = meanFrequency;
+ret(39) = percentMovingAbsoluteDeviation;
+ret(40) = peaksRate;
+ret(41) = meanPowerSpectralDensity;
+ret(42) = stdPowerSpectralDensity;
+ret(43) = varPowerSpectralDensity;
+ret(44) = meanDistances10;
+ret(45) = stdDistances10;
+ret(46) = varDistances10;
+ret(47) = relativeMeanDistances10;
+ret(48) = meanDistances15;
+ret(49) = stdDistances15;
+ret(50) = varDistances15;
+ret(51) = relativeMeanDistances15;
+ret(52) = meanDistances30;
+ret(53) = stdDistances30;
+ret(54) = varDistances30;
+ret(55) = relativeMeanDistance30;
+ret(56) = meanDistances05;
+ret(57) = stdDistances05;
+ret(58) = varDistances05;
+ret(59) = relativeMeanDistance05;
+
+if sum(isnan(ret)) > 0
+   disp('Something was NaN');
+   disp(ret);
+   pause;
+end
+
 ret = ret';

@@ -19,7 +19,7 @@ for i = 1:length(contents)
 end
 
 % X is all training / test sdata
-NUM_FEATURES = 42;
+NUM_FEATURES = 59;
 x = zeros(countLabeled, NUM_FEATURES);
 y = zeros(countLabeled, 1);
 
@@ -41,7 +41,4 @@ end
 permutedIndecies = randperm(length(x));
 x = x(permutedIndecies,:);
 y = y(permutedIndecies,:);
-
-
-x = (x - mean(x)) ./ (1e-12 + std(x));
 
