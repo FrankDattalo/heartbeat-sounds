@@ -19,7 +19,7 @@ for i = 1:length(contents)
 end
 
 % X is all training / test sdata
-NUM_FEATURES = 59;
+NUM_FEATURES = 75;
 x = zeros(countLabeled, NUM_FEATURES);
 y = zeros(countLabeled, 1);
 
