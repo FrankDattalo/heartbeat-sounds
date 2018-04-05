@@ -19,7 +19,7 @@ for i = 1:length(contents)
 end
 
 % X is all training / test sdata
-NUM_FEATURES = 75;
+NUM_FEATURES = 55;
 x = zeros(countLabeled, NUM_FEATURES);
 y = zeros(countLabeled, 1);
 
@@ -31,8 +31,8 @@ for i = 1:length(contents)
 
         fprintf("Loading %s\n", name);
         imported = loadWavData(name);
-        x(i,:) = extractFeatures(imported.data, imported.sampleFrequency);
-        y(i) = imported.normal;
+        x(countLabeled,:) = extractFeatures(imported.data, imported.sampleFrequency);
+        y(countLabeled) = imported.normal;
 
         countLabeled = countLabeled + 1;
     end

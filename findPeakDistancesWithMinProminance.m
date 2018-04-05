@@ -17,10 +17,10 @@ locs = dropNaN(locs);
 
 distances = computeDistances(locs);
 
-ret = zeros(4, 1);
+ret = zeros(3, 1);
 
 ret(1) = mean(distances);
 ret(2) = std(distances);
-ret(3) = var(distances);
-ret(4) = ret(1) / length(absData);
+%ret(3) = var(distances);
+ret(3) = ret(1) / length(absData);
 
