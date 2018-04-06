@@ -19,7 +19,7 @@ function [x,nny,data] = loadFilteredData(baseFolder)
     end
 
     % X is all training / test sdata
-    NUM_FEATURES = 55;
+    NUM_FEATURES = 83;
     NUM_CLASSES = 3;
     x = zeros(countLabeled, NUM_FEATURES);
     y = zeros(countLabeled, 1);
