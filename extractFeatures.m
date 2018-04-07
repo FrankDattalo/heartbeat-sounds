@@ -80,6 +80,14 @@ ret(getNext(ret, 1)) = meanfreq(data, sampleFrequency);
 % of time
 ret(getNext(ret, 1)) = mad(data, 100) / length(data);
 
+ret(getNext(ret, 4)) = findPeaksInFrequenceDomain(data, sampleFrequency, 1e-6);
+ret(getNext(ret, 4)) = findPeaksInFrequenceDomain(data, sampleFrequency, 1e-6 * 2);
+ret(getNext(ret, 4)) = findPeaksInFrequenceDomain(data, sampleFrequency, 1e-6 * 3);
+ret(getNext(ret, 4)) = findPeaksInFrequenceDomain(data, sampleFrequency, 1e-6 * 4);
+ret(getNext(ret, 4)) = findPeaksInFrequenceDomain(data, sampleFrequency, 1e-6 * 5);
+ret(getNext(ret, 4)) = findPeaksInFrequenceDomain(data, sampleFrequency, 1e-6 * 6);
+ret(getNext(ret, 4)) = findPeaksInFrequenceDomain(data, sampleFrequency, 1e-6 * 7);
+
 % error checking
 if sum(isnan(ret)) > 0
    disp('Something was NaN');

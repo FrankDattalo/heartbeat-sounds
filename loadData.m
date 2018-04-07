@@ -19,7 +19,7 @@ for i = 1:length(contents)
 end
 
 % X is all training / test sdata
-NUM_FEATURES = 55;
+NUM_FEATURES = 83;
 x = zeros(countLabeled, NUM_FEATURES);
 y = zeros(countLabeled, 1);
 
@@ -31,7 +31,13 @@ for i = 1:length(contents)
 
         fprintf("Loading %s\n", name);
         imported = loadWavData(name);
-        x(countLabeled,:) = extractFeatures(imported.data, imported.sampleFrequency);
+        
+        % low pass filter
+        Wn = 195/(imported.sampleFrequency/2);
+        [b,a] = cheby1(2,1,Wn,'low');
+        filteredData = filter(b,a,imported.data);
+        
+        x(countLabeled,:) = extractFeatures(filteredData, imported.sampleFrequency);
         y(countLabeled) = imported.normal;
 
         countLabeled = countLabeled + 1;

@@ -15,7 +15,8 @@ imported = importdata(dataLocation);
 data = struct;
 data.data = imported.data;
 data.sampleFrequency = imported.fs;
-%data.normal = contains(dataLocation, 'normal', 'IgnoreCase', true);
+data.normal = contains(dataLocation, 'normal', 'IgnoreCase', true);
+
 if contains(dataLocation, 'normal', 'IgnoreCase', true)
     data.class = 1;
 elseif contains(dataLocation, 'murmur', 'IgnoreCase', true)
