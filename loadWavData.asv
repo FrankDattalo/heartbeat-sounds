@@ -20,9 +20,8 @@ if contains(dataLocation, 'normal', 'IgnoreCase', true)
     data.class = 1;
 elseif contains(dataLocation, 'murmur', 'IgnoreCase', true)
     data.class = 2;
-%elseif contains(dataLocation, 'extrahls','IgnoreCase',true)
-%    data.class = 3;
-else
+elseif contains(dataLocation, 'extrahrs','IgnoreCase',true)
     data.class = 3;
+else
 end
 
